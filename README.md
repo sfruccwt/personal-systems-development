@@ -8,7 +8,7 @@
 - 已有输入：个人系统的 Motivation、已确认痛点、需求与待定架构问题。
 - 当前目标：把已同步的记录整理成反思，并形成下一次行动变化。
 - 尚未确定：具体扫描与关联方案、交互方式、技术栈、数据结构和运行方式。
-- 当前没有可运行代码，也没有发布版本。
+- `v0.1` 已提供扫描脚本和两阶段 Prompt，尚未通过用户端到端验收，也不是发布版本。
 
 需求事实以本地的 `docs/personal-pain-points-and-needs.md` 为准。该文档当前仍处于持续收集阶段，不应被 README、Roadmap 或观察记录重复改写成另一套需求。
 
@@ -44,6 +44,39 @@
 | `AGENTS.md` | AI 在本项目中的工作规则、上下文入口和验证要求 |
 
 [CHANGELOG.md](CHANGELOG.md) 记录已接受版本之间对使用者有意义的变化，随产品代码一起纳入 Git。
+
+## v0.1 本地试运行
+
+前提：使用 PowerShell 7（`pwsh`），并确保同步后的随手记位于 `C:/codex working space/随手记/daily/`；也可以通过 `-DailyDir` 指定其他位置。
+
+1. 扫描 2026-07-02 以来尚未由 v0.1 处理的内容：
+
+   ```powershell
+   pwsh -NoProfile -File scripts/scan-reflection-notes.ps1 -Mode Scan > reflection/runtime/scan-result.json
+   ```
+
+   `Scan` 只读取原始笔记并生成 `reflection/runtime/scan-checkpoint.json`，不会推进正式状态。
+
+2. 将扫描结果和已有项目上下文交给 [记录拆分与项目归类 Prompt](prompts/v0.1-classify-records.md)，集中确认归属不清的片段。
+
+3. 将确认后的分类结果交给 [项目 MDAO 材料组织 Prompt](prompts/v0.1-organize-project-materials.md)，把输出文档写入 `reflection/projects/<project-id>/materials.md`。
+
+4. 重新读取并确认全部材料已经落盘后，提交本次扫描 checkpoint：
+
+   ```powershell
+   pwsh -NoProfile -File scripts/scan-reflection-notes.ps1 -Mode Commit
+   ```
+
+5. 用户选择一个项目后，呈现对应 `materials.md`，再按本地 `docs/reflection/project-reflection-method-v1.md` 开展反思。
+
+扫描状态、checkpoint、分类中间结果和项目材料都位于本地 `reflection/`，不会进入 Git。
+
+运行自动检查：
+
+```powershell
+pwsh -NoProfile -File tests/test-scan-reflection-notes.ps1
+pwsh -NoProfile -File tests/test-prompt-contracts.ps1
+```
 
 ## 迭代方式
 

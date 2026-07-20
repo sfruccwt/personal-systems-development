@@ -16,3 +16,6 @@ docs/
 # Runtime output
 logs/
 *.log
+
+# Local reflection runtime and personal materials
+reflection/
