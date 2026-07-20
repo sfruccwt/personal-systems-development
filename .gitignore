@@ -17,5 +17,8 @@ docs/
 logs/
 *.log
 
+# Local personal planning data
+plan/
+
 # Local reflection runtime and personal materials
 reflection/
