@@ -1,0 +1,18 @@
+# Local project context and personal records
+AGENTS.md
+docs/
+.agents/
+.codex/
+
+# Local editor configuration
+.idea/
+.vscode/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+
+# Runtime output
+logs/
+*.log
