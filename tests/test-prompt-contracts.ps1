@@ -53,6 +53,7 @@ Assert-PromptContract -RelativePath "prompts/v0.1-organize-project-materials.md"
     '"schema_version": "v0.1-material-organization/v1"',
     "commit_ready",
     "reflection_handoff",
+    "## 材料模板",
     "## 项目概况",
     "## 来源索引",
     "正文不复制原文",
@@ -69,7 +70,9 @@ Assert-PromptContract -RelativePath "README.md" -RequiredMarkers @(
 )
 
 Assert-TextAbsent -RelativePath "prompts/v0.1-organize-project-materials.md" -ForbiddenMarkers @(
-    "reflection/projects/stable-kebab-case-id/materials.md"
+    "reflection/projects/stable-kebab-case-id/materials.md",
+    "## 组织目标",
+    "## 目标文件格式"
 )
 
 Assert-TextAbsent -RelativePath "README.md" -ForbiddenMarkers @(
