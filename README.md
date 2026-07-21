@@ -9,6 +9,7 @@
 - 当前目标：继续在真实使用中观察材料格式、反思过程和下一次行动是否有效，再决定后续版本的具体推进顺序。
 - 当前待验证：清爽材料格式能否在后续增量整理中保持稳定，阶段性理解能否持续改变后续行动。
 - `v0.1` 已提供扫描脚本和两阶段 Prompt，完成第一次材料归类、材料核对和阶段性反思。
+- `v0.2a` 已提供独立增量扫描脚本，并形成 2026-07-20 至 2026-07-26 的正式计划。
 
 需求事实以本地的 `docs/personal-pain-points-and-needs.md` 为准。该文档当前仍处于持续收集阶段，不应被 README、Roadmap 或观察记录重复改写成另一套需求。
 
@@ -26,7 +27,7 @@
 ## 当前边界
 
 - 从真实痛点和具体使用情境出发，不预先设计完整的大系统。
-- 一轮只推进一个主要问题，交付能够进入真实使用的最小闭环。
+- 每个版本只推进一个主要问题；不同版本可以在边界清楚时并行，但各自需要交付能够进入真实使用的最小闭环。
 - 区分战略规划与项目战术计划，候选想法不自动成为当前承诺。
 - 区分原始记录、待验证观察和可复用经验，不把所有内容都沉淀为资产。
 - 经验复用必须能够观察到行为或结果变化，不能只以“已检索”或“已注入上下文”作为成功证据。
@@ -76,6 +77,32 @@
 ```powershell
 pwsh -NoProfile -File tests/test-scan-reflection-notes.ps1
 pwsh -NoProfile -File tests/test-prompt-contracts.ps1
+```
+
+## v0.2a 本地规划
+
+plan 扫描器读取“长期待办”全文和 2026-07-02 以来的随手记。它使用 `plan/runtime/` 中的独立状态，不复用 Wiki triage 或 reflection 的处理进度。
+
+1. 扫描尚未由 plan 处理的内容，并生成待提交 checkpoint：
+
+   ```powershell
+   pwsh -NoProfile -File scripts/scan-plan-notes.ps1 -Mode Scan
+   ```
+
+2. 根据输出中的 `sources` 更新候选草稿，经用户核对后形成计划；确认相关文档已经保存并重新读取无误。
+
+3. 提交本次 checkpoint：
+
+   ```powershell
+   pwsh -NoProfile -File scripts/scan-plan-notes.ps1 -Mode Commit
+   ```
+
+Daily 文件在已处理前缀后追加内容时只返回 `newContent`；“长期待办”发生变化时返回最新全文。需要显式重扫全部来源时，在 `Scan` 命令后增加 `-ForceFullScan`。
+
+运行自动检查：
+
+```powershell
+pwsh -NoProfile -File tests/test-scan-plan-notes.ps1
 ```
 
 ## 迭代方式
