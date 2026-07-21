@@ -38,6 +38,10 @@ Assert-PromptContract -RelativePath "prompts/v0.1-organize-project-materials.md"
     '"schema_version": "v0.1-material-organization/v1"',
     "commit_ready",
     "reflection_handoff",
+    "## 项目概况",
+    "## 来源索引",
+    "正文不复制原文",
+    "included_fragment_ids:",
     "docs/reflection/project-reflection-method-v1.md",
     '只有 `commit_ready = true`'
 )
